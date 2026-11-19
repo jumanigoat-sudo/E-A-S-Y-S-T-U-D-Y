@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EasyStudy | Learn with Fred</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f5faf6;color:#20352a}
+header{padding:22px 7%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:25px;font-weight:bold;color:#238653}
+.hero{text-align:center;padding:55px 20px 30px}
+h1{font-size:42px;margin:10px}
+p{color:#64766b;line-height:1.6}
+.chat{max-width:650px;margin:25px auto;background:white;padding:25px;border-radius:20px;box-shadow:0 8px 35px #173b1710}
+.fred{display:flex;gap:12px;align-items:center}
+.avatar{background:#dff5e6;border-radius:50%;padding:14px;font-size:25px}
+.messages{min-height:180px;padding:20px 0}
+.message{padding:13px 16px;border-radius:14px;margin:10px 0;max-width:90%;line-height:1.5}
+.bot{background:#eaf6ed}
+.user{background:#d9f1e2;margin-left:auto}
+.controls{display:flex;gap:8px;flex-wrap:wrap}
+input[type=text]{flex:1;min-width:130px;padding:13px;border:1px solid #d5e3d9;border-radius:12px;font-size:15px}
+button,.upload{background:#258653;color:white;border:0;padding:13px 17px;border-radius:12px;cursor:pointer;font-size:15px}
+.upload{background:#e7f4eb;color:#258653}
+#photo{display:none}
+#preview{max-width:100%;max-height:220px;display:none;margin:15px 0;border-radius:12px}
+footer{text-align:center;padding:35px;color:#84948a}
+</style>
+</head>
+<body>
+<header><div class="logo">🌱 EasyStudy</div><span>Learn at your pace</span></header>
+<section class="hero">
+<h1>Meet Fred.</h1>
+<p>Your personal AI study tutor.<br>Understand the subject, don't just memorise answers.</p>
+</section>
+<main class="chat">
+<div class="fred">
+<div class="avatar">🦊</div>
+<div><strong>Fred</strong><br><small>Your study buddy</small></div>
+</div>
+<div class="messages" id="messages">
+<div class="message bot">Hey! I'm Fred. What are you learning today? You can also attach a homework picture!</div>
+</div>
+<img id="preview" alt="Your selected homework picture">
+<div class="controls">
+<label class="upload" for="photo">＋ Add picture</label>
+<input id="photo" type="file" accept="image/*">
+<input id="question" type="text" placeholder="Ask Fred something...">
+<button onclick="sendMessage()">Send</button>
+</div>
+</main>
+<footer>EasyStudy · Learn something new every day 🌿</footer>
+<script>
+const photo=document.getElementById('photo');
+const preview=document.getElementById('preview');
+photo.addEventListener('change',()=>{
+ const file=photo.files[0];
+ if(file){
+  preview.src=URL.createObjectURL(file);
+  preview.style.display='block';
+ }
+});
+function sendMessage(){
+ const input=document.getElementById('question');
+ const messages=document.getElementById('messages');
+ const text=input.value.trim();
+ if(!text && !photo.files.length)return;
+ if(text){
+  const bubble=document.createElement('div');
+  bubble.className='message user';
+  bubble.textContent=text;
+  messages.appendChild(bubble);
+ }
+ const reply=document.createElement('div');
+ reply.className='message bot';
+ reply.textContent='Thanks for sharing! Fred will be connected to his AI tutor service in the next setup step.';
+ messages.appendChild(reply);
+ input.value='';
+ photo.value='';
+ preview.style.display='none';
+}
+</script>
+</body>
+</html>
